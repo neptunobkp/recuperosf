@@ -1,0 +1,49 @@
+<h4 mat-dialog-title>
+  Asignación, número de siniestro:<strong> {{ data.numero }}</strong>
+</h4>
+<mat-dialog-content [formGroup]="form">
+  <div class="columns" *ngIf="accidente">
+    <div class="column">
+      <mat-form-field appearance="outline">
+        <mat-label>Comuna</mat-label>
+        <input matInput value="{{ accidente.COMUNA }}" disabled />
+      </mat-form-field>
+    </div>
+    <div class="column">
+      <mat-form-field appearance="outline">
+        <mat-label>Ciudad</mat-label>
+        <input matInput value="{{ accidente.CIUDAD }}" disabled />
+      </mat-form-field>
+    </div>
+    <div class="column">
+      <mat-form-field appearance="outline">
+        <mat-label>Region</mat-label>
+        <input
+          matInput
+          value="{{ accidente.REGIONACCIDENTE | pipaRegion }}"
+          disabled
+        />
+      </mat-form-field>
+    </div>
+  </div>
+  <div class="columns">
+    <div class="column">
+      <mat-form-field appearance="outline">
+        <mat-label>{{ etiqueta }}</mat-label>
+        <mat-select formControlName="ejecutivo">
+          <mat-option value=""></mat-option>
+          <mat-option *ngFor="let city of ejecutivos" [value]="city.id">
+            {{ city.nombre }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+  </div>
+</mat-dialog-content>
+
+<mat-dialog-actions>
+  <button class="mat-raised-button" (click)="close()">Cancelar</button>
+  <button class="mat-raised-button mat-primary" (click)="save()">
+    Guardar
+  </button>
+</mat-dialog-actions>

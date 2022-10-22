@@ -1,0 +1,10 @@
+<nav mat-tab-nav-bar [backgroundColor]="background">
+  <a
+    mat-tab-link
+    *ngFor="let link of links"
+    [active]="activeLink == link.codigo"
+    [routerLink]="['/bandejas', link.codigo]"
+  >
+    {{ link.descripcion }}
+  </a>
+</nav>

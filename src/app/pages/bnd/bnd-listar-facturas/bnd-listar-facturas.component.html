@@ -1,0 +1,51 @@
+<table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+  <ng-container matColumnDef="rutProveedor">
+    <th mat-header-cell *matHeaderCellDef>Rut Emisor</th>
+    <td mat-cell *matCellDef="let element">
+      {{ element.rutProveedor | formateoRut }}
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="nombreProveedor">
+    <th mat-header-cell *matHeaderCellDef>Nombre</th>
+    <td mat-cell *matCellDef="let element">{{ element.nombreProveedor }}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="numeroFactura">
+    <th mat-header-cell *matHeaderCellDef>Número Factura</th>
+    <td mat-cell *matCellDef="let element">
+      {{ element.numeroFactura | number }}
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="montoTotal">
+    <th mat-header-cell *matHeaderCellDef>Monto Total</th>
+    <td mat-cell *matCellDef="let element">
+      ${{ element.montoTotal | number }}
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="detalle">
+    <th mat-header-cell *matHeaderCellDef>Detalle</th>
+    <td mat-cell *matCellDef="let element">{{ element.detalle }}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="descarga">
+    <th mat-header-cell *matHeaderCellDef>Descargar Factura</th>
+    <td mat-cell *matCellDef="let element">
+      <a
+        *ngIf="element.codigoTipoGasto.includes('F9')"
+        class="button is-primary is-small"
+        target="__blank"
+        href="{{ urlBase }}?rutEmis={{ element.rutProveedor }}&&numDoc={{
+          element.numeroFactura
+        }}"
+      >
+        <i class="far fa-file-pdf fa-lg"></i>
+      </a>
+    </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+</table>

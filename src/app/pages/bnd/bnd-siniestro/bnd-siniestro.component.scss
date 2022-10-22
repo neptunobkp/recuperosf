@@ -1,0 +1,28 @@
+:host {
+  min-width: 90% !important;
+  max-width: 100% !important;
+}
+
+.container {
+  mat-card-content {
+    display: flex;
+    background-color: none;
+    margin-bottom: 0;
+  }
+
+  &__principal {
+
+    padding: 10px 0 0;
+
+    &__tabs {
+      flex: 6;
+      padding: 10px;
+      background-color: rgba(0,0,0,.04);
+    }
+
+    &__obs {
+      flex: 4;
+      padding: 10px;
+    }
+  }
+}

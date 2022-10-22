@@ -1,0 +1,63 @@
+<div class="centered-content">
+    <div class="modal-box">
+      <h1 class="title">
+        Aprobaciones
+      </h1>
+  
+      <mat-tree [dataSource]="dataSource" [treeControl]="treeControl">
+        <mat-tree-node
+          *matTreeNodeDef="let node"
+          matTreeNodeToggle
+          matTreeNodePadding
+        >
+          <button mat-icon-button disabled></button>
+          <mat-checkbox
+            class="checklist-leaf-node"
+            [checked]="checklistSelection.isSelected(node)"
+            (change)="todoLeafItemSelectionToggle(node)"
+            >{{ node.item }}
+          </mat-checkbox>
+        </mat-tree-node>
+  
+        <mat-tree-node
+          *matTreeNodeDef="let node; when: hasNoContent"
+          matTreeNodePadding
+        >
+          <button mat-icon-button disabled></button>
+        </mat-tree-node>
+  
+        <mat-tree-node
+          *matTreeNodeDef="let node; when: hasChild"
+          matTreeNodePadding
+        >
+          <button
+            mat-icon-button
+            matTreeNodeToggle
+            [attr.aria-label]="'toggle ' + node.filename"
+          >
+            <mat-icon class="mat-icon-rtl-mirror">
+              {{ treeControl.isExpanded(node) ? "expand_more" : "chevron_right" }}
+            </mat-icon>
+          </button>
+          <mat-checkbox
+            [checked]="descendantsAllSelected(node)"
+            [indeterminate]="descendantsPartiallySelected(node)"
+            (change)="todoItemSelectionToggle(node)"
+            >{{ node.item }}</mat-checkbox
+          >
+        </mat-tree-node>
+      </mat-tree>
+  
+      <br /><br />
+      <div class="buttons is-right">
+        <button class="button is-medium" routerLink="/etapas">Cancelar</button>
+        <button
+          class="button is-primary has-text-white is-medium"
+          (click)="guardar()"
+        >
+          Guardar
+        </button>
+      </div>
+    </div>
+  </div>
+  

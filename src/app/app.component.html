@@ -1,0 +1,42 @@
+<header *ngIf="currentUser">
+  <nav class="docs-navbar-header" aria-label="Top Toolbar">
+    <a class="hamburger" (click)="sidenav.toggle()">
+      <mat-icon>menu</mat-icon>
+    </a>
+
+    <div class="top-logos">
+      <img src="../../../assets/logobci-400x100.png" width="150px" alt="Logo Bci Seguros" />
+    </div>
+
+    <div class="flex-spacer"></div>
+
+    <b class="top-saludo">
+      ¡Hola {{ currentUser.nombres }} ({{ currentUser.rol }})!
+    </b>
+    <a mat-icon-button class="docs-button docs-navbar-show-small" href="#"> </a>
+    <a mat-raised-button color="info" (click)="logout()">
+      Cerrar Sesión
+    </a>
+  </nav>
+</header>
+
+<mat-sidenav-container class="docs-component-viewer-sidenav-container">
+  <mat-sidenav #sidenav [fixedInViewport]="false" [mode]="'over'" class="docs-component-viewer-sidenav"
+    *ngIf="currentUser">
+    <app-component-nav></app-component-nav>
+  </mat-sidenav>
+
+  <div class="info-bar is-marginless" *ngIf="currentUser">
+    <p class="is-marginless">Información Sistema</p>
+  </div>
+
+  <div class="docs-component-sidenav-content">
+    <div class="docs-component-sidenav-inner-content">
+      <main class="docs-component-sidenav-body-content center has-background-grey-light">
+        <div class="container is-fluid is-marginless is-paddingless">
+          <router-outlet></router-outlet>
+        </div>
+      </main>
+    </div>
+  </div>
+</mat-sidenav-container>

@@ -1,0 +1,23 @@
+@import "../../../main-styles.scss";
+
+.container {
+  min-height: 76vh;
+  max-width: 300px;
+}
+
+:host {
+  display: flex;
+  justify-content: center;
+  margin: 100px 0px;
+}
+
+.mat-form-field {
+  min-width: 250px;
+  max-width: 500px;
+  width: 100%;
+}
+
+.mat-card-header {
+  display: flex;
+  justify-content: center;
+}

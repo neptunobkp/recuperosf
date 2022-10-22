@@ -1,0 +1,25 @@
+<h1 mat-dialog-title>Rechazar transición</h1>
+<div mat-dialog-content [formGroup]="form">
+  <p>{{ mensaje }}</p>
+
+  <div class="columns">
+    <div class="column">
+      <mat-form-field appearance="outline">
+        <mat-label>Motivo</mat-label>
+        <textarea
+          matInput
+          cdkTextareaAutosize
+          formControlName="detalle"
+          cdkAutosizeMinRows="1"
+          cdkAutosizeMaxRows="5"
+        ></textarea>
+      </mat-form-field>
+    </div>
+  </div>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="cerrarDialogo()">Cancelar</button>
+  <button mat-button (click)="confirmado()">
+    Aceptar
+  </button>
+</div>

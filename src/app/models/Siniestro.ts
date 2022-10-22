@@ -1,0 +1,61 @@
+export interface Siniestro {
+  id: number;
+  riesgo: number;
+  fechaDenuncio: Date;
+  fechaSiniestro: Date;
+  prescripcion: Date;
+  fechaImportacion: Date;
+  compania: string;
+  numero: number;
+  provision: number;
+  gastoUf: number;
+  montoOr: number;
+  fechaAsignacion: Date;
+  ejecutivoNombres: string;
+  diasGestion: number;
+  alertaGestion: string;
+  estadoNombre: string;
+  probabilidadDesc: string;
+  tipoDanio: string;
+  tipoOrden: string;
+  diasAlerta: number;
+  aceptado: boolean;
+  companiaTercero: string;
+  pendienteVisado: boolean;
+  estadoDestino: string;
+  visadoRechazado: boolean;
+  actualizadoPor: String;
+  diasPrescripcion: number;
+  alertaPrescripcion: number;
+  asignable: boolean;
+  gestionable: boolean;
+}
+
+export interface SiniestroMono {
+  id: number;
+  fechaDenuncio: Date;
+  fechaSiniestro: Date;
+  compania: string;
+  numero: number;
+  provision: number;
+  gastoUf: number;
+  montoOr: number;
+  fechaAsignacion: Date;
+  ejecutivoNombres: string;
+  diasGestion: number;
+  alertaGestion: string;
+  estadoNombre: string;
+  asignable: boolean;
+  gestionable: boolean;
+  ejecutivoId: string;
+  probabilidadDesc: string;
+  alertado: boolean;
+  etapaId: number;
+  region: string;
+  pendienteVisado: boolean;
+  visadoRechazado: boolean;
+  comuna: string;
+  actualizadoPor: String;
+  diasPrescripcion: number;
+  alertaPrescripcion: number;
+}

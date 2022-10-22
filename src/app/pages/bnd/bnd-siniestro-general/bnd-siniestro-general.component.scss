@@ -1,0 +1,48 @@
+.columns {
+  margin-bottom: 0;
+
+  .column {
+    padding:0px 8px;
+  }
+}
+
+.loading-shade {
+  position: relative;
+  top: 0;
+  left: 0;
+  bottom: 56px;
+  right: 0;
+  background: rgba(0, 0, 0, 0.15);
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.mat-form-field-label, .mat-label {
+  color: rgba(0, 0, 0, 0.6);
+  font-size: 1rem;
+}
+
+.mff-w7 {
+  width: 7rem;
+}
+.mff-w10 {
+  width: 10rem;
+}
+.mff-w13 {
+  width: 13rem;
+}
+.mff-w17 {
+  width: 17rem;
+}
+.mff-w18 {
+  width: 18rem;
+}
+.mff-w19 {
+  width: 19rem;
+}
+.mff-w20 {
+  width: 20rem;
+}
+
+

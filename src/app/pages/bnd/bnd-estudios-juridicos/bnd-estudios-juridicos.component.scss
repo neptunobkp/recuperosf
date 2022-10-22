@@ -1,0 +1,20 @@
+@import "../../../../main-styles.scss";
+
+.bandejas-contenedor {
+  display: flex;
+  width: 90%;
+  height: 90%;
+  min-width: 1000px;
+  min-height: 680px;
+}
+
+.bandeja-contenedor-menu {
+  padding: 20px;
+  width: 100%;
+}
+
+.tag {
+  display: block;
+  box-shadow: 0 0 8px #ddd;
+  margin-bottom: 5px;
+}

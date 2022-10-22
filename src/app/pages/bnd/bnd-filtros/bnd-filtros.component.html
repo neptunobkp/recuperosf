@@ -1,0 +1,66 @@
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>Buscar</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <mat-form-field appearance="fill">
+      <mat-label>Número</mat-label>
+      <input matInput />
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Compañía</mat-label>
+      <mat-select>
+        <mat-option value="bci">Bci Seguros</mat-option>
+        <mat-option value="zenit">Zenit Seguros</mat-option>
+        <mat-option value="vida">Bci Vida</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Ejecutivo</mat-label>
+      <mat-select>
+        <mat-option value="bci">Nicolas Fernandez </mat-option>
+        <mat-option value="zenit">Darwin Perez</mat-option>
+        <mat-option value="vida">Loreto Urzua</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Estado</mat-label>
+      <mat-select>
+        <mat-option value="bci">Analisis </mat-option>
+        <mat-option value="zenit">Diseño</mat-option>
+        <mat-option value="vida">Implementación</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Probabilidad</mat-label>
+      <mat-select>
+        <mat-option value="bci">Bajo</mat-option>
+        <mat-option value="zenit">Medio</mat-option>
+        <mat-option value="vida">Alto</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Fecha Siniestro desde</mat-label>
+      <input matInput [matDatepicker]="picker" />
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Fecha Siniestro hasta</mat-label>
+      <input matInput [matDatepicker]="pickerh" />
+      <mat-datepicker-toggle matSuffix [for]="pickerh"></mat-datepicker-toggle>
+      <mat-datepicker #pickerh></mat-datepicker>
+    </mat-form-field>
+
+    <button class="button is-default">
+      <span class="icon">
+        <i class="fas fa-search"></i>
+      </span>
+    </button>
+  </mat-card-content>
+</mat-card>

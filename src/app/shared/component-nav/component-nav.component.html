@@ -1,0 +1,23 @@
+<div class="docs-component-viewer-nav">
+  <div class="docs-component-viewer-nav-content">
+    <div class="docs-component-viewer-nav-content-titulo">
+      <h1>¡{{ currentUser.nombres }}!</h1>
+      <div class="docs-component-viewer-nav-content-titulo-sub">
+        ¿En qué trabajaremos hoy?
+      </div>
+    </div>
+    <hr />
+    <div class="docs-component-viewer-nav-content-lista">
+      <mat-nav-list>
+        <a mat-list-item routerLink="/etapas">
+          <mat-icon mat-list-icon color="primary">account_tree</mat-icon>
+          Administración Etapas
+        </a>
+        <a mat-list-item routerLink="/bandejas/analisis">
+          <mat-icon mat-list-icon color="warn">web</mat-icon>
+          Bandejas
+        </a>
+      </mat-nav-list>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,80 @@
+<div class="mat-elevation-z8">
+  <div
+    class="example-loading-shade"
+    *ngIf="isLoadingResults || isRateLimitReached"
+  >
+    <mat-spinner *ngIf="isLoadingResults"></mat-spinner>
+    <div class="example-rate-limit-reached" *ngIf="isRateLimitReached">
+      Cargando..
+    </div>
+  </div>
+
+  <div class="upload-button-section">
+    <app-file-upload
+      (complete)="onFileComplete($event)"
+      [siniestroId]="siniestro.id"
+      *ngIf="puedeGestionarTerceros"
+    ></app-file-upload>
+  </div>
+
+  <table
+    mat-table
+    [dataSource]="data"
+    matSort
+    matSortActive="usuario"
+    matSortDisableClear
+    matSortDirection="desc"
+  >
+    <ng-container matColumnDef="nombre"
+      ><th mat-header-cell *matHeaderCellDef>Nombre</th>
+      <td mat-cell *matCellDef="let element">
+        {{ element.nombre }}
+      </td></ng-container
+    >
+    <ng-container matColumnDef="fecha"
+      ><th mat-header-cell *matHeaderCellDef>Subido el</th>
+      <td mat-cell *matCellDef="let element">
+        {{ element.fecha | date: 'dd-MM-yy' }}
+      </td></ng-container
+    >
+    <ng-container matColumnDef="usuarioNombres">
+      <th mat-header-cell *matHeaderCellDef>Por</th>
+      <td mat-cell *matCellDef="let element">
+        {{ element.usuarioNombres }}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="acciones">
+      <th mat-header-cell *matHeaderCellDef></th>
+      <td mat-cell *matCellDef="let element">
+        <a
+          class="button is-primary is-small"
+          aria-label="reply1"
+          matTooltip="Descargar"
+          (click)="descargar(element)"
+        >
+          <span class="icon is-large">
+            <i class="fas fa-cloud-download-alt"></i>
+          </span>
+        </a>
+
+        <a
+          class="button is-danger is-small"
+          aria-label="reply1"
+          matTooltip="Eliminar"
+          *ngIf="puedeGestionarTerceros"
+          (click)="eliminar(element.id)"
+        >
+          <span class="icon is-large">
+            <i class="fas fa-trash" aria-hidden="true"></i>
+          </span>
+        </a>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+  </table>
+
+  <mat-paginator [length]="resultsLength" [pageSize]="1000"></mat-paginator>
+</div>

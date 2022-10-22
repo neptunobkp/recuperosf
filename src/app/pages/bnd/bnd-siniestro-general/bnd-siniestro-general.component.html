@@ -1,0 +1,1047 @@
+<div class="container is-fluid container__principal">
+  <mat-card class="card-resumen-siniestro">
+    <mat-card-header>
+      <mat-card-title>Siniestro</mat-card-title>
+    </mat-card-header>
+    <mat-card-content class="is-marginless">
+      <div class="columns" *ngIf="detalleListo">
+        <div class="column">
+          <mat-form-field appearance="fill">
+            <mat-label>N° Siniestro</mat-label>
+            <input matInput disabled value="{{ vmDetalle.numero }}" />
+          </mat-form-field>
+        </div>
+        <div class="column">
+          <mat-form-field appearance="fill">
+            <mat-label>Ejecutivo</mat-label>
+            <input matInput disabled value="{{ vmDetalle.ejecutivoNombres }}" />
+          </mat-form-field>
+        </div>
+        <div class="column">
+          <mat-form-field appearance="fill">
+            <mat-label>Estado</mat-label>
+            <input matInput disabled value="{{ vmDetalle.estadoNombre }}" />
+          </mat-form-field>
+        </div>
+        <div class="column">
+          <mat-form-field appearance="fill">
+            <mat-label>Probabilidad</mat-label>
+            <input matInput disabled value="{{ vmDetalle.probabilidadDesc }}" />
+          </mat-form-field>
+        </div>
+      </div>
+    </mat-card-content>
+    <mat-card-actions> </mat-card-actions>
+  </mat-card>
+
+  <mat-card class="card-resumen-siniestro">
+    <mat-card-header>
+      <mat-card-title>Detalles</mat-card-title>
+    </mat-card-header>
+
+    <mat-card-content>
+      <mat-accordion [multi]="true">
+        <div class="columns">
+          <div class="column" *ngIf="relatoListo">
+            <mat-expansion-panel [expanded]="true">
+              <mat-expansion-panel-header>
+                <mat-panel-title> Detalle del siniestro </mat-panel-title>
+              </mat-expansion-panel-header>
+
+              <mat-form-field appearance="fill" style="width: 100%">
+                <mat-label>Descripción</mat-label>
+                <textarea matInput disabled rows="8" value="{{ vmRelato }}">
+                </textarea>
+              </mat-form-field>
+            </mat-expansion-panel>
+          </div>
+          <div class="column" *ngIf="detalleListo">
+            <mat-expansion-panel [expanded]="true">
+              <mat-expansion-panel-header>
+                <mat-panel-title> Datos del siniestro </mat-panel-title>
+              </mat-expansion-panel-header>
+
+              <div class="columns">
+                <div class="column">
+                  <mat-form-field appearance="fill" class="mff-no-padding">
+                    <mat-label>Siniestro</mat-label>
+                    <input matInput disabled value="{{ vmDetalle.numero }}" />
+                  </mat-form-field>
+                </div>
+                <div class="column">
+                  <mat-form-field appearance="fill">
+                    <mat-label>Compañía</mat-label>
+                    <input matInput disabled value="{{ vmDetalle.compania }}" />
+                  </mat-form-field>
+                </div>
+              </div>
+
+              <div class="columns">
+                <div class="column">
+                  <mat-form-field appearance="fill" class="mff-no-padding">
+                    <mat-label>Fecha Siniestro</mat-label>
+                    <input
+                      matInput
+                      disabled
+                      value="{{ vmDetalle.fechaSiniestro | date: 'dd-MM-yy' }}"
+                    />
+                  </mat-form-field>
+                </div>
+                <div class="column">
+                  <mat-form-field appearance="fill">
+                    <mat-label>Fecha Denuncio</mat-label>
+                    <input
+                      matInput
+                      disabled
+                      value="{{ vmDetalle.fechaDenuncio | date: 'dd-MM-yy' }}"
+                    />
+                  </mat-form-field>
+                </div>
+              </div>
+
+              <div class="columns">
+                <div class="column">
+                  <mat-form-field appearance="fill">
+                    <mat-label>Causal</mat-label>
+                    <input matInput disabled value="{{ vmDetalle.causal }}" />
+                  </mat-form-field>
+                </div>
+                <div class="column">
+                  <mat-form-field appearance="fill">
+                    <mat-label>Póliza</mat-label>
+                    <input
+                      matInput
+                      disabled
+                      value="{{ vmDetalle.numeroPoliza }}"
+                    />
+                  </mat-form-field>
+                </div>
+              </div>
+
+              <div class="columns">
+                <div class="column">
+                  <mat-form-field appearance="fill">
+                    <mat-label>Riesgo</mat-label>
+                    <input
+                      matInput
+                      disabled
+                      value="{{ vmDetalle.riesgo }}"
+                    />
+                  </mat-form-field>
+                </div>
+                <div class="column">
+                  <mat-form-field appearance="fill">
+                    <mat-label>Compañía Tercero</mat-label>
+                    <input
+                      matInput
+                      disabled
+                      value="{{ vmDetalle.companiaTercero | pipaCompania }}"
+                    />
+                  </mat-form-field>
+                </div>
+              </div>
+
+
+
+              <div class="columns">
+                <div class="column">
+                  <mat-form-field appearance="fill">
+                    <mat-label>Estudio Jurídico</mat-label>
+                    <input
+                      matInput
+                      disabled
+                      value="{{ vmDetalle.estudioAbogados }}"
+                    />
+                  </mat-form-field>
+                </div>
+              </div>
+            </mat-expansion-panel>
+          </div>
+        </div>
+
+        <div class="columns">
+          <div class="column" *ngIf="conductorListo">
+            <mat-expansion-panel [expanded]="true">
+              <mat-expansion-panel-header>
+                <mat-panel-title> Conductor </mat-panel-title>
+              </mat-expansion-panel-header>
+
+              <div class="columns">
+                <div class="column is-narrow">
+                  <div class="mff-w7">
+                    <mat-form-field appearance="fill">
+                      <mat-label>Rut</mat-label>
+                      <input
+                        matInput
+                        disabled
+                        value="{{ calculaDv(vmConductor.RUTCONDUCTOR) }}"
+                      />
+                    </mat-form-field>
+                  </div>
+                </div>
+
+                <div class="column">
+                  <mat-form-field appearance="fill">
+                    <mat-label>Nombre</mat-label>
+                    <input
+                      matInput
+                      disabled
+                      value="{{ vmConductor.NOMBRECONDUCTOR }}"
+                    />
+                  </mat-form-field>
+                </div>
+
+                <div class="column">
+                  <mat-form-field appearance="fill">
+                    <mat-label>Dirección</mat-label>
+                    <input
+                      matInput
+                      disabled
+                      value="{{ vmConductor.DIRECCIONCONDUCTOR }}"
+                    />
+                  </mat-form-field>
+                </div>
+
+                <div class="column">
+                  <mat-form-field appearance="fill">
+                    <mat-label>Email</mat-label>
+                    <input
+                      matInput
+                      disabled
+                      value="{{ vmConductor.EMAILCONDUCTOR }}"
+                    />
+                  </mat-form-field>
+                </div>
+              </div>
+
+              <div class="columns">
+                <div class="column is-narrow">
+                  <div class="mff-w7">
+                    <mat-form-field appearance="fill">
+                      <mat-label>Región</mat-label>
+                      <input
+                        matInput
+                        disabled
+                        value="{{ vmConductor.REGIONCONDUCTOR | pipaRegion }}"
+                      />
+                    </mat-form-field>
+                  </div>
+                </div>
+
+                <div class="column">
+                  <mat-form-field appearance="fill">
+                    <mat-label>Ciudad</mat-label>
+                    <input matInput disabled value="{{ vmConductor.CIUDAD }}" />
+                  </mat-form-field>
+                </div>
+
+                <div class="column">
+                  <mat-form-field appearance="fill">
+                    <mat-label>Teléfono</mat-label>
+                    <input
+                      matInput
+                      disabled
+                      value="{{ vmConductor.TELEFONOADICIONALCONDUCTOR }}"
+                    />
+                  </mat-form-field>
+                </div>
+
+                <div class="column">
+                  <mat-form-field appearance="fill">
+                    <mat-label>Celular</mat-label>
+                    <input
+                      matInput
+                      disabled
+                      value="{{ vmConductor.CELULARCONDUCTOR }}"
+                    />
+                  </mat-form-field>
+                </div>
+              </div>
+            </mat-expansion-panel>
+          </div>
+
+          <div class="column" *ngIf="denuncianteListo">
+            <mat-expansion-panel [expanded]="true">
+              <mat-expansion-panel-header>
+                <mat-panel-title> Denunciante </mat-panel-title>
+              </mat-expansion-panel-header>
+
+              <mat-form-field appearance="fill" class="mff-w7">
+                <mat-label>Rut</mat-label>
+                <input
+                  matInput
+                  disabled
+                  value="{{ calculaDv(vmDenunciante.RUT) }}"
+                />
+              </mat-form-field>
+
+              <mat-form-field appearance="fill">
+                <mat-label>Nombre</mat-label>
+                <input matInput disabled value="{{ vmDenunciante.NOMBRE }}" />
+              </mat-form-field>
+
+              <mat-form-field appearance="fill">
+                <mat-label>Dirección</mat-label>
+                <input
+                  matInput
+                  disabled
+                  value="{{ vmDenunciante.DIRECCION }}"
+                />
+              </mat-form-field>
+
+              <mat-form-field appearance="fill">
+                <mat-label>Ciudad</mat-label>
+                <input matInput disabled value="{{ vmDenunciante.CCIUDAD }}" />
+              </mat-form-field>
+
+              <mat-form-field appearance="fill">
+                <mat-label>Teléfono</mat-label>
+                <input
+                  matInput
+                  disabled
+                  value="{{ vmDenunciante.TELEFONO1 }}"
+                />
+              </mat-form-field>
+            </mat-expansion-panel>
+          </div>
+        </div>
+
+        <div class="columns">
+          <div class="column is-6" *ngIf="aseguradoListo">
+            <mat-expansion-panel [expanded]="true">
+              <mat-expansion-panel-header>
+                <mat-panel-title> Asegurado </mat-panel-title>
+              </mat-expansion-panel-header>
+
+              <div class="columns">
+                <div class="column is-one-third">
+                  <mat-form-field appearance="fill">
+                    <mat-label>Rut</mat-label>
+                    <input
+                      matInput
+                      disabled
+                      value="{{ calculaDv(vmAsegurado.RUT) }}"
+                    />
+                  </mat-form-field>
+                </div>
+                <div class="column">
+                  <mat-form-field appearance="fill">
+                    <mat-label>Nombre</mat-label>
+                    <input matInput disabled value="{{ vmAsegurado.NOMBRE }}" />
+                  </mat-form-field>
+                </div>
+              </div>
+
+              <div class="columns">
+                <div class="column">
+                  <mat-form-field appearance="fill">
+                    <mat-label>Dirección</mat-label>
+                    <input
+                      matInput
+                      disabled
+                      value="{{ vmAsegurado.DIRECCION }}"
+                    />
+                  </mat-form-field>
+                </div>
+              </div>
+
+              <div class="columns">
+                <div class="column">
+                  <mat-form-field appearance="fill">
+                    <mat-label>Ciudad</mat-label>
+                    <input matInput disabled value="{{ vmAsegurado.CIUDAD }}" />
+                  </mat-form-field>
+                </div>
+                <div class="column">
+                  <mat-form-field appearance="fill">
+                    <mat-label>Comuna</mat-label>
+                    <input matInput disabled value="{{ vmAsegurado.COMUNA }}" />
+                  </mat-form-field>
+                </div>
+              </div>
+              <div class="columns">
+                <div class="column">
+                  <mat-form-field appearance="fill">
+                    <mat-label>Teléfono</mat-label>
+                    <input
+                      matInput
+                      disabled
+                      value="{{ vmAsegurado.TELEFONO1 }}"
+                    />
+                  </mat-form-field>
+                </div>
+                <div class="column">
+                  <mat-form-field appearance="fill">
+                    <mat-label>Teléfono Adicional</mat-label>
+                    <input
+                      matInput
+                      disabled
+                      value="{{ vmAsegurado.TELEFONO2 }}"
+                    />
+                  </mat-form-field>
+                </div>
+              </div>
+            </mat-expansion-panel>
+          </div>
+          <div class="column is-6" *ngIf="vehiculoListo">
+            <mat-expansion-panel [expanded]="true">
+              <mat-expansion-panel-header>
+                <mat-panel-title> Vehículo asegurado </mat-panel-title>
+              </mat-expansion-panel-header>
+
+              <div class="columns">
+                <div class="column">
+                  <mat-form-field appearance="fill">
+                    <mat-label>Tipo vehículo</mat-label>
+                    <input
+                      matInput
+                      disabled
+                      value="{{ vmVehiculo.TIPOVEHICULO }}"
+                    />
+                  </mat-form-field>
+                </div>
+                <div class="column mff-w7">
+                  <mat-form-field appearance="fill">
+                    <mat-label>Patente</mat-label>
+                    <input
+                      matInput
+                      disabled
+                      value="{{
+                        rescataPatente(vmVehiculo.PATENTE1, vmVehiculo.PATENTE2)
+                      }}"
+                    />
+                  </mat-form-field>
+                </div>
+                <div class="column mff-w7">
+                  <mat-form-field appearance="fill">
+                    <mat-label>Año</mat-label>
+                    <input
+                      matInput
+                      disabled
+                      value="{{ vmVehiculo.ANIOFABRICACION }}"
+                    />
+                  </mat-form-field>
+                </div>
+              </div>
+              <div class="columns">
+                <div class="column">
+                  <mat-form-field appearance="fill">
+                    <mat-label>Marca</mat-label>
+                    <input matInput disabled value="{{ vmVehiculo.MARCA }}" />
+                  </mat-form-field>
+                </div>
+                <div class="column">
+                  <mat-form-field appearance="fill">
+                    <mat-label>Modelo</mat-label>
+                    <input matInput disabled value="{{ vmVehiculo.MODELO }}" />
+                  </mat-form-field>
+                </div>
+              </div>
+              <div class="columns">
+                <div class="column">
+                  <mat-form-field appearance="fill">
+                    <mat-label>Color</mat-label>
+                    <input matInput disabled value="{{ vmVehiculo.COLOR }}" />
+                  </mat-form-field>
+                </div>
+                <div class="column">
+                  <mat-form-field appearance="fill">
+                    <mat-label>N° Motor</mat-label>
+                    <input
+                      matInput
+                      disabled
+                      value="{{ vmVehiculo.NUMEROMOTOR }}"
+                    />
+                  </mat-form-field>
+                </div>
+              </div>
+
+              <div class="columns">
+                <div class="column">
+                  <mat-form-field appearance="fill">
+                    <mat-label>Nª Chasis</mat-label>
+                    <input
+                      matInput
+                      disabled
+                      value="{{ vmVehiculo.NUMEROCHASIS }}"
+                    />
+                  </mat-form-field>
+                </div>
+              </div>
+            </mat-expansion-panel>
+          </div>
+        </div>
+
+        <div class="columns">
+          <div class="column">
+            <mat-progress-bar
+              mode="indeterminate"
+              *ngIf="!vmAccidente"
+            ></mat-progress-bar>
+            <mat-expansion-panel [expanded]="true">
+              <mat-expansion-panel-header>
+                <mat-panel-title> Accidente </mat-panel-title>
+              </mat-expansion-panel-header>
+              <ng-container *ngIf="vmAccidente">
+                <div class="columns">
+                  <div class="column">
+                    <mat-form-field appearance="fill">
+                      <mat-label>Calle</mat-label>
+                      <input
+                        matInput
+                        disabled
+                        value="{{ vmAccidente.CALLEACCIDENTE }}"
+                      />
+                    </mat-form-field>
+                  </div>
+                  <div class="column">
+                    <mat-form-field appearance="fill">
+                      <mat-label>Intersección</mat-label>
+                      <input
+                        matInput
+                        disabled
+                        value="{{ vmAccidente.INTERCECCIONACCIDENTE }}"
+                      />
+                    </mat-form-field>
+                  </div>
+                </div>
+
+                <div class="columns">
+                  <div class="column">
+                    <mat-form-field appearance="fill">
+                      <mat-label>Numeración</mat-label>
+                      <input
+                        matInput
+                        disabled
+                        value="{{ vmAccidente.NUMEROCALLEACCIDENTE }}"
+                      />
+                    </mat-form-field>
+                  </div>
+                  <div class="column">
+                    <mat-form-field appearance="fill">
+                      <mat-label>Comuna</mat-label>
+                      <input
+                        matInput
+                        disabled
+                        value="{{ vmAccidente.COMUNA }}"
+                      />
+                    </mat-form-field>
+                  </div>
+                </div>
+
+                <div class="columns">
+                  <div class="column">
+                    <mat-form-field appearance="fill">
+                      <mat-label>Ciudad</mat-label>
+                      <input
+                        matInput
+                        disabled
+                        value="{{ vmAccidente.CIUDAD }}"
+                      />
+                    </mat-form-field>
+                  </div>
+                  <div class="column">
+                    <mat-form-field appearance="fill">
+                      <mat-label>Región</mat-label>
+                      <input
+                        matInput
+                        disabled
+                        value="{{ vmAccidente.REGIONACCIDENTE | pipaRegion }}"
+                      />
+                    </mat-form-field>
+                  </div>
+                </div>
+
+                <div class="columns">
+                  <div class="column">
+                    <mat-form-field appearance="fill">
+                      <mat-label>Hora</mat-label>
+                      <input
+                        matInput
+                        disabled
+                        value="{{ vmAccidente.HORAACCIDENTE }}:{{
+                          vmAccidente.MINUTOACCIDENTE
+                        }}"
+                      />
+                    </mat-form-field>
+                  </div>
+                  <div class="column">
+                    <mat-form-field appearance="fill">
+                      <mat-label>Alcoholemia</mat-label>
+                      <input
+                        matInput
+                        disabled
+                        value="{{ vmAccidente.ACOHOLEMIAACCIDENTE }}"
+                      />
+                    </mat-form-field>
+                  </div>
+                </div>
+              </ng-container>
+            </mat-expansion-panel>
+          </div>
+          <div class="column" *ngIf="constanciaListo">
+            <mat-expansion-panel [expanded]="true">
+              <mat-expansion-panel-header>
+                <mat-panel-title> Constancia </mat-panel-title>
+              </mat-expansion-panel-header>
+
+              <div class="columns">
+                <div class="column">
+                  <mat-form-field appearance="fill">
+                    <mat-label>Lugar accidente</mat-label>
+                    <input
+                      matInput
+                      disabled
+                      value="{{ vmConstancia.LUGARACCIDENTE }}"
+                    />
+                  </mat-form-field>
+                </div>
+                <div class="column">
+                  <mat-form-field appearance="fill">
+                    <mat-label>Prefectura</mat-label>
+                    <input
+                      matInput
+                      disabled
+                      value="{{ vmConstancia.PREFECTURACONSTANCIA }}"
+                    />
+                  </mat-form-field>
+                </div>
+              </div>
+
+              <div class="columns">
+                <div class="column">
+                  <mat-form-field appearance="fill">
+                    <mat-label>Hora</mat-label>
+                    <input
+                      matInput
+                      disabled
+                      value="{{ vmConstancia.HORACONSTANCIA }}:{{
+                        vmConstancia.MINUTOCONSTANCIA
+                      }}"
+                    />
+                  </mat-form-field>
+                </div>
+                <div class="column">
+                  <mat-form-field appearance="fill">
+                    <mat-label>N° Parte</mat-label>
+                    <input
+                      matInput
+                      disabled
+                      value="{{ vmConstancia.NPARTECONSTANCIA }}"
+                    />
+                  </mat-form-field>
+                </div>
+              </div>
+              <div class="columns">
+                <div class="column">
+                  <mat-form-field appearance="fill">
+                    <mat-label>Citación</mat-label>
+                    <input
+                      matInput
+                      disabled
+                      value="{{ vmConstancia.CITACIONJURADA }}"
+                    />
+                  </mat-form-field>
+                </div>
+                <div class="column">
+                  <mat-form-field appearance="fill">
+                    <mat-label>Fecha Citación</mat-label>
+                    <input
+                      matInput
+                      disabled
+                      [value]="crearFecha(vmConstancia.FECHACITACIONCONSTANCIADIA , vmConstancia.FECHACITACIONCONSTANCIAMES , vmConstancia.FECHACITACIONCONSTANCIAANIO)"
+                    />
+                  </mat-form-field>
+                </div>
+              </div>
+
+              <div class="columns">
+                <div class="column">
+                  <mat-form-field appearance="fill">
+                    <mat-label>Juzgado</mat-label>
+                    <input
+                      matInput
+                      disabled
+                      value="{{ vmConstancia.JUZGADOCONSTANCIA }}"
+                    />
+                  </mat-form-field>
+                </div>
+              </div>
+            </mat-expansion-panel>
+          </div>
+        </div>
+
+        <div class="columns">
+          <div class="column" *ngIf="vmLiquidador">
+            <mat-expansion-panel [expanded]="true">
+              <mat-expansion-panel-header>
+                <mat-panel-title> Liquidador </mat-panel-title>
+              </mat-expansion-panel-header>
+              <div class="columns">
+                <div class="column is-narrow">
+                  <div class="mff-w7">
+                    <mat-form-field appearance="fill" class="mff-w7">
+                      <mat-label>Rut</mat-label>
+                      <input
+                        matInput
+                        disabled
+                        value="{{ calculaDv(vmLiquidador.RUTLIQUIDADOR) }}"
+                      />
+                    </mat-form-field>
+                  </div>
+                </div>
+                <div class="column">
+                  <mat-form-field appearance="fill">
+                    <mat-label>Nombre</mat-label>
+                    <input
+                      matInput
+                      disabled
+                      value="{{ vmLiquidador.NOMBRELIQUIDADOR }}"
+                    />
+                  </mat-form-field>
+                </div>
+                <div class="column">
+                  <mat-form-field appearance="fill">
+                    <mat-label>Email</mat-label>
+                    <input
+                      matInput
+                      disabled
+                      value="{{ vmLiquidador.CORREOBCILIQUIDADOR }}"
+                    />
+                  </mat-form-field>
+                </div>
+                <div class="column is-narrow">
+                  <div class="mff-w7">
+                    <mat-form-field appearance="fill">
+                      <mat-label>Teléfono</mat-label>
+                      <input
+                        matInput
+                        disabled
+                        value="{{ vmLiquidador.TELEFONOLIQUIDADOR }}"
+                      />
+                    </mat-form-field>
+                  </div>
+                </div>
+
+                <div
+                  class="column is-narrow"
+                  *ngIf="
+                    vmLiquidador.TELEFONOLIQUIDADOR2 &&
+                    vmLiquidador.TELEFONOLIQUIDADOR !=
+                      vmLiquidador.TELEFONOLIQUIDADOR2
+                  "
+                >
+                  <div class="mff-w7">
+                    <mat-form-field appearance="fill">
+                      <mat-label>Teléfono adicional</mat-label>
+                      <input
+                        matInput
+                        disabled
+                        value="{{ vmLiquidador.TELEFONOLIQUIDADOR2 }}"
+                      />
+                    </mat-form-field>
+                  </div>
+                </div>
+              </div>
+            </mat-expansion-panel>
+          </div>
+        </div>
+      </mat-accordion>
+    </mat-card-content>
+
+    <mat-card-actions> </mat-card-actions>
+  </mat-card>
+
+  <mat-card class="mat-elevation-z8">
+    <mat-card-header>
+      <mat-card-title>Terceros </mat-card-title>
+    </mat-card-header>
+    <mat-card-content class="is-marginless">
+      <mat-accordion [multi]="true">
+        <mat-expansion-panel [expanded]="true">
+          <mat-expansion-panel-header>
+            <mat-panel-title> </mat-panel-title>
+          </mat-expansion-panel-header>
+
+          <mat-accordion [multi]="true">
+            <mat-expansion-panel [expanded]="true">
+              <mat-expansion-panel-header>
+                <mat-panel-title> Propietario </mat-panel-title>
+              </mat-expansion-panel-header>
+
+              <div
+                class="columns is-marginless is-paddingless"
+                *ngIf="vmPropietario"
+              >
+                <div class="column">
+                  <h6 class="title">Información Personal</h6>
+
+                  <div class="columns">
+                    <div class="column">
+                      <mat-form-field appearance="fill">
+                        <mat-label>Rut </mat-label>
+                        <input
+                          matInput
+                          disabled
+                          value="{{ calculaDv(vmPropietario.RUTPROPIETARIO) }}"
+                        />
+                      </mat-form-field>
+                    </div>
+                    <div class="column">
+                      <mat-form-field appearance="fill">
+                        <mat-label>Telefono</mat-label>
+                        <input
+                          matInput
+                          disabled
+                          value="{{ vmPropietario.FONO }}"
+                        />
+                      </mat-form-field>
+                    </div>
+                  </div>
+
+                  <div class="columns">
+                    <div class="column">
+                      <mat-form-field appearance="fill">
+                        <mat-label>Nombres</mat-label>
+                        <input
+                          matInput
+                          disabled
+                          value="{{ vmPropietario.NOMBREPROPIETARIO }}"
+                        />
+                      </mat-form-field>
+                    </div>
+                  </div>
+                  <div class="columns">
+                    <div class="column">
+                      <mat-form-field appearance="fill">
+                        <mat-label>Correo</mat-label>
+                        <input
+                          matInput
+                          disabled
+                          value="{{ vmPropietario.EMAIL }}"
+                        />
+                      </mat-form-field>
+                    </div>
+                  </div>
+
+                  <div class="columns">
+                    <div class="column">
+                      <mat-form-field appearance="fill">
+                        <mat-label>Dirección</mat-label>
+                        <input
+                          matInput
+                          disabled
+                          value="{{ vmPropietario.DIRECCIONPROPIETARIO }}"
+                        />
+                      </mat-form-field>
+                    </div>
+                    <div class="column">
+                      <mat-form-field appearance="fill">
+                        <mat-label>Ciudad</mat-label>
+                        <input
+                          matInput
+                          disabled
+                          value="{{ vmPropietario.CIUDAD }}"
+                        />
+                      </mat-form-field>
+                    </div>
+                    <div class="column">
+                      <mat-form-field appearance="fill">
+                        <mat-label>Comuna</mat-label>
+                        <input
+                          matInput
+                          disabled
+                          value="{{ vmPropietario.COMUNA }}"
+                        />
+                      </mat-form-field>
+                    </div>
+                  </div>
+
+                  <div class="columns">
+                    <div class="column">
+                      <mat-form-field appearance="fill">
+                        <mat-label>Indicio Compañía</mat-label>
+                        <input matInput disabled />
+                      </mat-form-field>
+                    </div>
+
+                    <div class="column">
+                      <mat-form-field appearance="fill">
+                        <mat-label>Culpabilidad</mat-label>
+                        <input
+                          matInput
+                          disabled
+                          value="{{ vmPropietario.CULPABLE }}"
+                        />
+                      </mat-form-field>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="column">
+                  <h6 class="title">Vehículo</h6>
+                  <div class="columns">
+                    <div class="column">
+                      <mat-form-field appearance="fill">
+                        <mat-label>Patente </mat-label>
+                        <input
+                          matInput
+                          disabled
+                          value="{{ vmPropietario.PATENTE }}"
+                        />
+                      </mat-form-field>
+                      <mat-form-field appearance="fill">
+                        <mat-label>Modelo </mat-label>
+                        <input matInput disabled value="" />
+                      </mat-form-field>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </mat-expansion-panel>
+
+            <mat-expansion-panel
+              [expanded]="true"
+              *ngFor="let cadaConductor of this.vmConductores"
+            >
+              <mat-expansion-panel-header>
+                <mat-panel-title> Conductor </mat-panel-title>
+              </mat-expansion-panel-header>
+
+              <div
+                class="columns is-marginless is-paddingless"
+                *ngIf="vmConductor"
+              >
+                <div class="column">
+                  <h6 class="title">Información Personal</h6>
+
+                  <div class="columns">
+                    <div class="column">
+                      <mat-form-field appearance="fill">
+                        <mat-label>Rut </mat-label>
+                        <input
+                          matInput
+                          disabled
+                          value="{{ calculaDv(cadaConductor.RUTTER) }}"
+                        />
+                      </mat-form-field>
+                    </div>
+                    <div class="column">
+                      <mat-form-field appearance="fill">
+                        <mat-label>Nombres</mat-label>
+                        <input
+                          matInput
+                          disabled
+                          value="{{ cadaConductor.NOMBRETER }}"
+                        />
+                      </mat-form-field>
+                    </div>
+                  </div>
+
+                  <div class="columns">
+                    <div class="column">
+                      <mat-form-field appearance="fill">
+                        <mat-label>Dirección</mat-label>
+                        <input
+                          matInput
+                          disabled
+                          value="{{ cadaConductor.DIRECCIONTER }}"
+                        />
+                      </mat-form-field>
+                    </div>
+                    <div class="column">
+                      <mat-form-field appearance="fill">
+                        <mat-label>Comuna</mat-label>
+                        <input
+                          matInput
+                          disabled
+                          value="{{ cadaConductor.COMUNA }}"
+                        />
+                      </mat-form-field>
+                    </div>
+                  </div>
+                  <div class="columns">
+                    <div class="column">
+                      <mat-form-field appearance="fill">
+                        <mat-label>Indicio Compañía</mat-label>
+                        <input
+                          matInput
+                          disabled
+                          value="{{ cadaConductor.INDICIOCOMPANIATER }}"
+                        />
+                      </mat-form-field>
+                    </div>
+
+                    <div class="column">
+                      <mat-form-field appearance="fill">
+                        <mat-label>Culpabilidad</mat-label>
+                        <input
+                          matInput
+                          disabled
+                          value="{{ cadaConductor.CULPABILIDAD }}"
+                        />
+                      </mat-form-field>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="column">
+                  <h6 class="title">Vehículo</h6>
+                  <div class="columns">
+                    <div class="column">
+                      <mat-form-field appearance="fill">
+                        <mat-label>Patente </mat-label>
+                        <input
+                          matInput
+                          disabled
+                          value="{{ cadaConductor.PATENTEVHTER }}"
+                        />
+                      </mat-form-field>
+                    </div>
+                    <div class="column">
+                      <mat-form-field appearance="fill">
+                        <mat-label>Marca </mat-label>
+                        <input
+                          matInput
+                          disabled
+                          value="{{ cadaConductor.MARCA }}"
+                        />
+                      </mat-form-field>
+                    </div>
+                  </div>
+                  <div class="columns">
+                    <div class="column">
+                      <mat-form-field appearance="fill">
+                        <mat-label>Modelo </mat-label>
+                        <input
+                          matInput
+                          disabled
+                          value="{{ cadaConductor.MODELO }}"
+                        />
+                      </mat-form-field>
+                    </div>
+                    <div class="column">
+                      <mat-form-field appearance="fill">
+                        <mat-label>Color </mat-label>
+                        <input
+                          matInput
+                          disabled
+                          value="{{ cadaConductor.COLORVHTER }}"
+                        />
+                      </mat-form-field>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </mat-expansion-panel>
+          </mat-accordion>
+
+          <app-bnd-listar-terceros *ngIf="vmDetalle" [siniestro]="vmDetalle">
+          </app-bnd-listar-terceros>
+        </mat-expansion-panel>
+      </mat-accordion>
+    </mat-card-content>
+
+    <mat-card-actions> </mat-card-actions>
+  </mat-card>
+</div>

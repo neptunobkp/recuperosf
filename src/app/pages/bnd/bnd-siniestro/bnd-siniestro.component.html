@@ -1,0 +1,42 @@
+<div class="container is-fluid container__principal has-background-white">
+    <mat-card-header>
+      <mat-card-title *ngIf="siniestro">
+        <a href="javascript:void(0)" (click)="goBack()">Salir</a>
+        / Siniestro N° {{ siniestro.numero }}</mat-card-title
+      >
+    </mat-card-header>
+    <mat-card-content>
+      <div class="container__principal__tabs is-marginless is-paddingless">
+        <mat-tab-group [selectedIndex]="indiceSeleccionado">
+          <mat-tab label="General">
+            <ng-template matTabContent>
+              <app-bnd-siniestro-general
+                [siniestroId]="siniestroId"
+              ></app-bnd-siniestro-general>
+            </ng-template>
+          </mat-tab>
+          <mat-tab label="Gestión">
+            <ng-template matTabContent>
+              <app-bnd-siniestro-gestion
+                [siniestroId]="siniestroId"
+              ></app-bnd-siniestro-gestion>
+            </ng-template>
+          </mat-tab>
+          <mat-tab label="Documentos">
+            <ng-template matTabContent>
+              <app-bnd-siniestro-documentos
+                [siniestroId]="siniestroId"
+              ></app-bnd-siniestro-documentos>
+            </ng-template>
+          </mat-tab>
+          <mat-tab label="Bitácora">
+            <ng-template matTabContent>
+              <app-bnd-siniestro-bitacora
+                [siniestroId]="siniestroId"
+              ></app-bnd-siniestro-bitacora>
+            </ng-template>
+          </mat-tab>
+        </mat-tab-group>
+      </div>
+    </mat-card-content>
+</div>

@@ -1,0 +1,53 @@
+table {
+  width: 100%;
+}
+
+td,
+th {
+  width: 250px;
+}
+
+.tabla {
+  padding: 10px 20px;
+
+  a {
+    margin-bottom: 10px;
+    float: right;
+  }
+}
+
+.acciones {
+  .button {
+    margin-left: 10px;
+  }
+}
+
+
+.columns {
+  margin-bottom: 0;
+
+  .column {
+    padding:0px 8px;
+  }
+}
+
+.mff-no-padding {
+  .mat-form-field-wrapper {
+    padding-bottom: 0 !important;
+  }
+}
+
+.mat-form-field {
+  margin-left: 8px;
+  width: 100%;
+}
+
+h6.title {
+  font: 400 calc(14px * 0.90)/20px Roboto, "Helvetica Neue", sans-serif;
+}
+
+th.mat-header-cell, tr.mat-header-row {
+  padding: 0 !important;
+  margin: 0 !important;
+  display: none;
+}

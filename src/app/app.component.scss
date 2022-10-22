@@ -1,0 +1,181 @@
+@import "../main-styles.scss";
+
+$sidenav-width: 540px;
+
+material-docs-app {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  top: 56px;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+app-navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 2;
+}
+
+material-docs-app > app-component-sidenav {
+  flex: 1;
+}
+
+material-docs-app > app-homepage,
+material-docs-app > app-guides,
+material-docs-app > guide-viewer {
+  overflow-y: auto;
+}
+
+app-component-sidenav {
+  display: flex;
+  flex-direction: column;
+  overflow: auto;
+}
+
+.docs-component-viewer-sidenav-container {
+  flex: 1;
+  box-sizing: border-box;
+}
+
+.docs-component-viewer-sidenav {
+  overflow: auto;
+  background-color: $darker-grey;
+  min-width: 300px;
+}
+
+.docs-component-sidenav-inner-content {
+  display: flex;
+  flex-direction: row;
+
+  // The rule will match the element following the router-outlet which will be the routed component.
+  router-outlet + * {
+    flex-grow: 1;
+  }
+}
+
+.mat-drawer {
+  &::-webkit-scrollbar {
+    height: 4px;
+    width: 4px;
+  }
+}
+
+.docs-component-sidenav-content {
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+}
+
+.docs-component-sidenav-inner-content {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.docs-component-sidenav-body-content {
+  display: flex;
+  flex: 1 1 auto;
+}
+
+@media (max-width: $small-breakpoint-width) {
+  // Add specific rule to prevent default rule conflict
+  .docs-component-viewer-sidenav-container .docs-component-viewer-sidenav {
+    // position right above the content
+    z-index: 4;
+  }
+
+  .docs-component-viewer-nav {
+    position: relative;
+    top: 0;
+
+    .docs-component-viewer-nav-content {
+      box-sizing: border-box;
+      margin: 0;
+      max-height: initial;
+    }
+  }
+}
+
+@media (max-width: 720px) {
+  .docs-component-viewer-sidenav-container {
+    flex: 1 0 auto;
+  }
+
+  .docs-component-sidenav-body-content {
+    flex-direction: column;
+  }
+}
+
+.docs-navbar-header {
+  background-color: $white;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  height: 50px;
+}
+
+.flex-spacer {
+  flex-grow: 1;
+}
+
+.docs-angular-logo {
+  height: 26px;
+  margin: 0 4px 3px 0;
+  vertical-align: middle;
+}
+
+.docs-github-logo {
+  height: 21px;
+  margin: 0 7px 2px 0;
+  vertical-align: middle;
+}
+
+.docs-navbar-link {
+  text-decoration: inherit;
+  flex: 1;
+}
+
+.docs-navbar {
+  display: none;
+}
+
+.docs-navbar-show-small {
+  display: none;
+}
+
+/**
+    * Rules for when the device is detected to be a small screen.
+    * Moves content two rows instead of one.
+    */
+@media (max-width: 720px) {
+  .docs-navbar-hide-small {
+    display: none;
+  }
+
+  .docs-navbar-show-small {
+    display: block;
+  }
+
+  .docs-navbar {
+    display: flex;
+  }
+
+  .docs-navbar--github-logo {
+    margin: 0;
+  }
+}
+
+.hamburger {
+  background-color: #f0f0f0;
+  width: 80px;
+  height: 50px;
+  text-align: center;
+
+  .mat-icon {
+    margin-top: 10px;
+  }
+}

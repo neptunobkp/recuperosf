@@ -1,0 +1,290 @@
+<mat-dialog-content [formGroup]="form">
+  <mat-progress-bar mode="indeterminate" *ngIf="pensando"></mat-progress-bar>
+  <mat-card>
+    <h1 class="titulo">Datos de la persona</h1>
+    <mat-card-content>
+      <div class="columns">
+        <div class="column">
+          <mat-form-field appearance="fill" class="buscadorrut">
+            <mat-label>Rut</mat-label>
+            <button
+              mat-icon-button
+              color="primary"
+              matPrefix
+              (click)="buscarPorRut()"
+            >
+              <mat-icon>search</mat-icon>
+            </button>
+           
+            <input
+              matInput
+              maxlength="200"
+              formControlName="rut"
+              autofocus
+              soloRut
+            />
+            <button
+              mat-icon-button
+              color="warn"
+              matSuffix
+              (click)="comprarDatosPorRut()"
+              matTooltip="Obtener datos de Equifax"
+            >
+              <mat-icon>explicit</mat-icon>
+            </button>
+            <mat-error
+              *ngIf="form.controls.rut.errors && form.controls.rut.errors.rut"
+            >
+              Rut no válido</mat-error
+            >
+          </mat-form-field>
+        </div>
+        <div class="column">
+          <mat-form-field appearance="fill">
+            <mat-label>Nombres</mat-label>
+            <input
+              matInput
+              maxlength="200"
+              formControlName="nombres"
+              soloLetras
+            />
+          </mat-form-field>
+        </div>
+        <div class="column">
+          <mat-form-field appearance="fill">
+            <mat-label>Dirección</mat-label>
+            <input
+              matInput
+              maxlength="200"
+              formControlName="direccion"
+              soloAlfaNumerico
+            />
+          </mat-form-field>
+        </div>
+        <div class="column">
+          <mat-form-field appearance="fill">
+            <mat-label>Culpabilidad</mat-label>
+            <mat-select formControlName="culpabilidad">
+              <mat-option value="1">Culpable</mat-option>
+              <mat-option value="2">Inocente</mat-option>
+              <mat-option value="3">Ambos</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="columns">
+        <div class="column">
+          <mat-form-field appearance="fill">
+            <mat-label>Teléfono</mat-label>
+            <!-- <span matPrefix>
+              <mat-icon>smartphone</mat-icon>
+            </span> -->
+            <input
+              matInput
+              maxlength="200"
+              formControlName="telefono"
+              soloNumeros
+            />
+            <!-- <span matSuffix>
+              <mat-icon>looks_one</mat-icon>
+            </span> -->
+          </mat-form-field>
+        </div>
+        <div class="column">
+          <mat-form-field appearance="fill">
+            <mat-label>Otro teléfono</mat-label>
+            <input
+              matInput
+              maxlength="200"
+              formControlName="telefonoAlt"
+              soloNumeros
+            />
+          </mat-form-field>
+        </div>
+        <div class="column">
+          <mat-form-field appearance="fill">
+            <mat-label>Correo</mat-label>
+            <input matInput maxlength="200" formControlName="correo" />
+            <mat-error *ngIf="form.controls.correo.errors"
+              >Correo no válido</mat-error
+            >
+          </mat-form-field>
+        </div>
+        <div class="column">
+          <mat-form-field appearance="fill">
+            <mat-label>Otro correo</mat-label>
+            <input matInput maxlength="200" formControlName="correoAlt" />
+            <mat-error *ngIf="form.controls.correoAlt.errors"
+              >Correo no válido</mat-error
+            >
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="columns">
+        <div class="column">
+          <mat-form-field appearance="fill">
+            <mat-label>Clasificación</mat-label>
+            <mat-select formControlName="clasificacion">
+              <mat-option value="1">Conductor</mat-option>
+              <mat-option value="2">Propietario</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div class="column">
+          <mat-form-field appearance="fill">
+            <mat-label>Otra dirección</mat-label>
+            <input
+              matInput
+              maxlength="200"
+              formControlName="alias"
+              soloAlfaNumerico
+            />
+          </mat-form-field>
+        </div>
+        <div class="column"></div>
+        <div class="column"></div>
+      </div>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card>
+    <h1 class="titulo">Datos del Vehículo</h1>
+    <mat-card-content>
+      <div *ngIf="multiplesVehiculos" class="columns">
+        <div class="column">
+          <div class="buttons">
+            <button
+              *ngFor="let cadaVehiculo of propietario.vehiculos"
+              class="button is-default"
+              (click)="seleccionarVehiculo(cadaVehiculo.patente)"
+            >
+              {{ cadaVehiculo.patente }}
+            </button>
+            <button
+              class="button is-default"
+              (click)="seleccionarVehiculo('otro')"
+            >
+              Otro
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div *ngIf="!multiplesVehiculos">
+        <div class="columns">
+          <div class="column">
+            <mat-form-field appearance="fill">
+              <mat-label>Patente</mat-label>
+              <button
+                mat-icon-button
+                color="primary"
+                matPrefix
+                (click)="buscarPatente()"
+                matTooltip="Buscar en base recuperos"
+              >
+                <mat-icon>search</mat-icon>
+              </button>
+              <input
+                matInput
+                maxlength="6"
+                formControlName="patente"
+                (keydown.enter)="buscarPatente()"
+                soloPatente
+              />
+              <button
+                mat-icon-button
+                color="warn"
+                matSuffix
+                (click)="comprarDatos()"
+                matTooltip="Obtener datos de Equifax"
+              >
+                <mat-icon>explicit</mat-icon>
+              </button>
+            </mat-form-field>
+          </div>
+          <div class="column">
+            <mat-form-field appearance="fill">
+              <mat-label>Marca</mat-label>
+              <input
+                matInput
+                maxlength="200"
+                formControlName="marca"
+                soloAlfaNumerico
+              />
+            </mat-form-field>
+          </div>
+          <div class="column">
+            <mat-form-field appearance="fill">
+              <mat-label>Modelo</mat-label>
+              <input
+                matInput
+                maxlength="200"
+                formControlName="modelo"
+                soloAlfaNumerico
+              />
+            </mat-form-field>
+          </div>
+          <div class="column">
+            <mat-form-field appearance="fill">
+              <mat-label>Año</mat-label>
+              <input
+                matInput
+                maxlength="200"
+                formControlName="anio"
+                soloNumeros
+              />
+            </mat-form-field>
+          </div>
+        </div>
+
+        <div class="columns">
+          <div class="column">
+            <mat-form-field appearance="fill">
+              <mat-label>Color</mat-label>
+              <input
+                matInput
+                maxlength="200"
+                formControlName="color"
+                soloLetras
+              />
+            </mat-form-field>
+          </div>
+          <div class="column">
+            <mat-form-field appearance="fill">
+              <mat-label>Número Motor</mat-label>
+              <input
+                matInput
+                maxlength="200"
+                formControlName="numeroMotor"
+                soloAlfaNumerico
+              />
+            </mat-form-field>
+          </div>
+          <div class="column">
+            <mat-form-field appearance="fill">
+              <mat-label>Número Chasis</mat-label>
+              <input
+                matInput
+                maxlength="200"
+                formControlName="numeroChasis"
+                soloAlfaNumerico
+              />
+            </mat-form-field>
+          </div>
+          <div class="column">
+            <input formControlName="id"  type="hidden" />
+          </div>
+        </div>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</mat-dialog-content>
+
+<mat-dialog-actions>
+  <div style="margin-right: 10px">
+    <button class="mat-raised-button" (click)="close()">Cancelar</button>
+  </div>
+  <button class="mat-raised-button mat-primary" (click)="save()">
+    Guardar
+  </button>
+</mat-dialog-actions>

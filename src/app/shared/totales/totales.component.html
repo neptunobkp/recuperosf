@@ -1,0 +1,16 @@
+<div class="container--fluid">
+  <div class="columns">
+    <div class="column has-text-centered">
+      <mat-chip-list aria-label="Fish selection">
+        <mat-chip>
+          Total de siniestros en bandeja:
+          {{ totalBandeja.totalGlobal | number }}
+        </mat-chip>
+        <mat-chip
+          >Cantidad de siniestros encontrados:
+          {{ totalBandeja.total | number }}</mat-chip
+        >
+      </mat-chip-list>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,12 @@
+<div class="snackmensaje">
+  <ul>
+    <li *ngFor="let city of data">
+      {{ city }}
+    </li>
+  </ul>
+  <div class="dismiss">
+    <button mat-icon-button (click)="snackBarRef.dismiss()">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+</div>

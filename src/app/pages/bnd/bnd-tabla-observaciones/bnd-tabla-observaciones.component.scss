@@ -1,0 +1,38 @@
+.observaciones {
+  background-color: whitesmoke;
+  width: 100%;
+
+  td,
+  th {
+    border: none;
+    padding: 0 1px;
+  }
+
+  th {
+    font-size: 14px;
+    font-weight: 500;
+    text-align: center;
+    vertical-align: middle;
+  }
+
+  mat-card {
+    margin: 10px 0px;
+  }
+}
+
+.obs-content {
+  background-color: #FFF;
+  padding: 10px 5px 5px;
+  border-bottom: 1px solid rgb(215,215,215);
+
+  .usuario {
+    font-weight: 500;
+  }
+
+  .detalle {
+    width: 100%;
+    max-width: 19rem;
+    margin-right: 3px;
+    word-break: break-word;
+  }
+}

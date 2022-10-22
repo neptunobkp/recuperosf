@@ -1,0 +1,11 @@
+.mat-row {
+  &.alertado {
+    background: #d12c3a !important;
+    &:hover {
+      background: red;
+    }
+    .mat-cell {
+      color: white;
+    }
+  }
+}

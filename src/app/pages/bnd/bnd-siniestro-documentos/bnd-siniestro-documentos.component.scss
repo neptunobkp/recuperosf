@@ -1,0 +1,19 @@
+.container {
+  max-width: none;
+  min-width: 90%;
+  min-height: 100vh;
+}
+
+.mat-card-header-text {
+  margin: 0 !important;
+  padding: 0 !important;
+
+  .mat-card-title {
+    margin-bottom: 0;
+  }
+}
+
+th.mat-header-cell, td.mat-cell, td.mat-footer-cell {
+  vertical-align: middle !important;
+  background-color: red;
+}

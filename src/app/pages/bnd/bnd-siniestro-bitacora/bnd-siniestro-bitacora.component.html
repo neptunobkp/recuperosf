@@ -1,0 +1,58 @@
+<div class="container is-fluid container__bitacora">
+  <div
+    class="example-loading-shade"
+    *ngIf="isLoadingResults || isRateLimitReached"
+  >
+    <mat-spinner *ngIf="isLoadingResults"></mat-spinner>
+    <div class="example-rate-limit-reached" *ngIf="isRateLimitReached">
+      Cargando..
+    </div>
+  </div>
+
+  <mat-card class="card-resumen-siniestro">
+    <mat-card-header>
+      <mat-card-title>Siniestro</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <div class="columns">
+        <div class="column">
+          <mat-form-field appearance="fill">
+            <mat-label>N° Siniestro</mat-label>
+            <input matInput disabled value="{{ vmNumeroSiniestro }}" />
+          </mat-form-field>
+        </div>
+        <div class="column">
+          <mat-form-field appearance="fill">
+            <mat-label>Ejecutivo</mat-label>
+            <input matInput disabled value="{{ vmEjecutivo }}" />
+          </mat-form-field>
+        </div>
+        <div class="column">
+          <mat-form-field appearance="fill">
+            <mat-label>Estado</mat-label>
+            <input matInput disabled value="{{ vmEstado }}" />
+          </mat-form-field>
+        </div>
+        <div class="column">
+          <mat-form-field appearance="fill">
+            <mat-label>Probabilidad</mat-label>
+            <input matInput disabled value="{{ vmProbabilidad }}" />
+          </mat-form-field>
+        </div>
+      </div>
+    </mat-card-content>
+  </mat-card>
+  
+  <mat-accordion [multi]="true">
+    <mat-expansion-panel [expanded]="true">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          Bitacora
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+
+      <app-bnd-tabla-bitacora [siniestroId]="siniestroId">
+      </app-bnd-tabla-bitacora>
+    </mat-expansion-panel>
+  </mat-accordion>
+</div>

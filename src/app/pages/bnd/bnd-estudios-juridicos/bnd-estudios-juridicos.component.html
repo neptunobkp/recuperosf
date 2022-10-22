@@ -1,0 +1,317 @@
+<div class="bandeja bandeja--multi">
+  <app-bnd-pestanas [indice]="'esudiosJuridicos'"></app-bnd-pestanas>
+  <div class="section">
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>Filtros</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <form
+          [formGroup]="editarForm"
+          id="formularioFiltros"
+          (ngSubmit)="onSaveForm()"
+        >
+          <div class="columns mff-no-padding">
+            <div class="column">
+              <mat-form-field appearance="outline">
+                <mat-label>Número de siniestro</mat-label>
+                <input
+                  matInput
+                  formControlName="numeroSiniestro"
+                  maxlength="9"
+                  soloNumeros
+                />
+              </mat-form-field>
+            </div>
+            <div class="column">
+              <mat-form-field appearance="outline">
+                <mat-label>Compañía</mat-label>
+                <mat-select formControlName="compania">
+                  <mat-option value="">Todas</mat-option>
+                  <mat-option value="1">Bci Seguros</mat-option>
+                  <mat-option value="2">Zenit Seguros</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+            <div class="column">
+              <mat-form-field appearance="outline">
+                <mat-label>Fecha siniestro desde</mat-label>
+                <input
+                  matInput
+                  [matDatepicker]="picker1"
+                  [min]="minDate"
+                  [max]="maxDate"
+                  formControlName="fechaDesde"
+                />
+                <mat-datepicker-toggle
+                  matSuffix
+                  [for]="picker1"
+                ></mat-datepicker-toggle>
+                <mat-datepicker #picker1 disabled="false"></mat-datepicker>
+              </mat-form-field>
+            </div>
+            <div class="column">
+              <mat-form-field appearance="outline">
+                <mat-label>Fecha siniestro hasta</mat-label>
+                <input
+                  matInput
+                  [matDatepicker]="picker2"
+                  [min]="minDate"
+                  [max]="maxDate"
+                  formControlName="fechaHasta"
+                />
+                <mat-datepicker-toggle
+                  matSuffix
+                  [for]="picker2"
+                ></mat-datepicker-toggle>
+                <mat-datepicker #picker2 disabled="false"></mat-datepicker>
+              </mat-form-field>
+            </div>
+          </div>
+
+          <div class="columns mff-no-padding">
+            <div class="column is-3">
+              <mat-form-field appearance="outline">
+                <mat-label>Estado</mat-label>
+                <mat-select formControlName="estadoId">
+                  <mat-option></mat-option>
+                  <mat-option *ngFor="let city of estados" [value]="city.id">
+                    {{ city.nombre }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+            <div class="column is-3">
+              <mat-form-field appearance="outline">
+                <mat-label>Probabilidad</mat-label>
+                <mat-select formControlName="probabilidad">
+                  <mat-option></mat-option>
+                  <mat-option
+                    *ngFor="let probabilidad of probabilidades"
+                    [value]="probabilidad.valor"
+                  >
+                    {{ probabilidad.texto }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+            <div
+              class="column is-3"
+              *ngIf="currentUser.rol != 'EstudioJuridicoExter'"
+            >
+              <mat-form-field appearance="outline">
+                <mat-label>Estudio Jurídico Asignado</mat-label>
+                <mat-select formControlName="ejecutivoId">
+                  <mat-option value=""></mat-option>
+                  <mat-option value="-1">Sin asignar</mat-option>
+                  <mat-option *ngFor="let city of ejecutivos" [value]="city.id">
+                    {{ city.nombre }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+            <div class="column is-3">
+              <button class="button is-primary" type="submit">
+                <span class="icon">
+                  <i class="fas fa-search"></i>
+                </span>
+              </button>
+              &nbsp;
+              <button class="button is-default" (click)="reload()">
+                <span class="icon">
+                  <i class="fas fa-eraser"></i>
+                </span>
+              </button>
+              &nbsp;
+              <button
+                class="button is-success"
+                type="button"
+                (click)="exportar()"
+              >
+                <span class="icon" *ngIf="!generandoExcel">
+                  <i class="fas fa-file-excel"></i>
+                </span>
+                <mat-icon *ngIf="generandoExcel"
+                  ><mat-spinner color="accent" diameter="20"> </mat-spinner
+                ></mat-icon>
+              </button>
+&nbsp;
+              <button class="button is-dark" type="button" (click)="consulta()">
+                <span class="icon">
+                  <i class="fas fa-user"></i>
+                </span>
+              </button>
+            </div>
+          </div>
+        </form>
+      </mat-card-content>
+    </mat-card>
+
+    <br />
+
+    <div class="mat-elevation-z8">
+      <div
+        class="example-loading-shade"
+        *ngIf="isLoadingResults || isRateLimitReached"
+      >
+        <mat-spinner *ngIf="isLoadingResults"></mat-spinner>
+        <div class="example-rate-limit-reached" *ngIf="isRateLimitReached">
+          Cargando..
+        </div>
+      </div>
+
+      <app-totales [totalBandeja]="totales" *ngIf="totales"></app-totales>
+      <table
+        mat-table
+        [dataSource]="data"
+        matSort
+        matSortActive="numero"
+        matSortDisableClear
+        matSortDirection="desc"
+      >
+        <ng-container matColumnDef="numero">
+          <th mat-header-cell mat-sort-header *matHeaderCellDef mat-sort-header>N°</th>
+          <td mat-cell *matCellDef="let element">
+            {{ element.numero }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="compania">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header></th>
+          <td mat-cell *matCellDef="let element">
+            <img
+              [src]="
+                element.compania == 1
+                  ? 'assets/bci.png'
+                  : 'assets/zenit.png'
+              "
+            />
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="fechaDenuncio">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>
+            Fecha denuncio
+          </th>
+          <td mat-cell *matCellDef="let element">
+            {{ element.fechaDenuncio | date: "dd-MM-yy" }}
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="fechaSiniestro">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>
+            Fecha siniestro
+          </th>
+          <td mat-cell *matCellDef="let element">
+            {{ element.fechaSiniestro | date: "dd-MM-yy" }}
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="provision">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Provisión</th>
+          <td mat-cell *matCellDef="let element">
+            UF {{ element.provision || 0 | number }}
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="gastoUF">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Gasto</th>
+          <td mat-cell *matCellDef="let element">
+            UF {{ element.gastoUf || 0 | number }}
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="montoOR">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Monto OR</th>
+          <td mat-cell *matCellDef="let element">
+            $ {{ element.montoOr || 0 | number }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="diasGestion">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Días gestión</th>
+          <td mat-cell *matCellDef="let element">
+            {{ element.diasGestion }}
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="alertaGestion">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Alerta gestión</th>
+          <td mat-cell *matCellDef="let element">
+            <app-celda-gestion [dias]="element.diasGestion" [tipoAlerta]="element.alertaGestion" ></app-celda-gestion>
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="estadoNombre">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Estado</th>
+          <td mat-cell *matCellDef="let element">
+            {{ element.estadoNombre }}
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="probabilidad">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Probabilidad</th>
+          <td mat-cell *matCellDef="let element">
+            {{ element.probabilidad }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="tipoOrden">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>OR/AT</th>
+          <td mat-cell *matCellDef="let element">{{ element.tipoOrden }}</td>
+        </ng-container>
+        <ng-container matColumnDef="fechaAsignacion">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Fecha Asignación</th>
+          <td mat-cell *matCellDef="let element">
+            {{ element.fechaAsignacion | date: "dd-MM-yy" }}
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="ejecutivoNombres">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Asignado a</th>
+          <td mat-cell *matCellDef="let element">
+            {{ element.ejecutivoNombres }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="tipoDanio">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Tipo Daño</th>
+          <td mat-cell *matCellDef="let element">{{ element.tipoDanio }} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="aceptado">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Aceptado Rechazado</th>
+          <td mat-cell *matCellDef="let element">
+            <mat-icon *ngIf="element.aceptado">check_circle_outline</mat-icon> 
+            <mat-icon *ngIf="!element.aceptado">highlight_off</mat-icon>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="prescripcion">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Prescripción</th>
+          <td mat-cell *matCellDef="let element">
+            <app-celda-alerta [diasPrescripcion]="element.prescripcion" [alertaPrescripcion]="element.alertaPrescripcion" ></app-celda-alerta>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="certificacion">
+          <th mat-header-cell *matHeaderCellDef>Certificación</th>
+          <td mat-cell *matCellDef="let element">
+            <mat-icon
+              class="alerta"
+              *ngIf="element.visadoRechazado"
+              fontSet="material-icons-outlined"
+            >
+              thumb_down
+            </mat-icon>
+            <mat-icon *ngIf="element.pendienteVisado"> query_builder </mat-icon>
+            <span *ngIf="element.pendienteVisado" class="tag">
+              {{ element.estadoDestino }}
+            </span>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr
+          mat-row
+          *matRowDef="let row; columns: displayedColumns"
+          [routerLink]="['/siniestros', ocultarId(row.id), 'general']"
+        ></tr>
+      </table>
+
+      <mat-paginator [length]="resultsLength" [pageSize]="10"></mat-paginator>
+    </div>
+  </div>
+</div>

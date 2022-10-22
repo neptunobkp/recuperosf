@@ -1,0 +1,4 @@
+{
+    "appService.defaultWebAppToDeploy": "/subscriptions/f0902171-d435-40db-be38-53848db77ef3/resourceGroups/joseze/providers/Microsoft.Web/sites/recuc",
+    "appService.deploySubpath": "dist\\recuperos-cliente"
+}

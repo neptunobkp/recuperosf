@@ -1,0 +1,14 @@
+@import "../../../../main-styles.scss";
+
+.bandejas-contenedor {
+  display: flex;
+  width: 90%;
+  height: 90%;
+  min-width: 1000px;
+  min-height: 680px;
+}
+
+.bandeja-contenedor-menu {
+  padding: 20px;
+  width: 100%;
+}

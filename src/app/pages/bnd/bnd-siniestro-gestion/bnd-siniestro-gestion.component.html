@@ -1,0 +1,319 @@
+<div class="container is-fluid">
+  <div class="example-loading-shade" *ngIf="isLoadingResults">
+    <mat-spinner *ngIf="isLoadingResults"></mat-spinner>
+  </div>
+
+  <div class="container columns" *ngIf="siniestro">
+    <div class="column is-10">
+      <div
+        class="notification is-link notificacion"
+        *ngIf="siniestro.pendienteVisado && puedeGestionarProbabilidad"
+      >
+        <h4>Certificación pendiente</h4>
+        <div></div>
+        <button
+          mat-raised-button
+          color="primary"
+          aria-label="reply1"
+          (click)="aprobar()"
+          matTooltip="Aprobar"
+        >
+          Aceptar
+          <span class="icon">
+            <i class="fas fa-thumbs-up"></i>
+          </span>
+        </button>
+        &nbsp;
+        <button
+          mat-raised-button
+          color="primary"
+          aria-label="reply1"
+          (click)="rechazar()"
+          matTooltip="Rechazar"
+        >
+          Rechazar
+          <span class="icon">
+            <i class="fas fa-thumbs-down"></i>
+          </span>
+        </button>
+      </div>
+      <mat-card class="card-resumen-siniestro">
+        <mat-card-header>
+          <mat-card-title>Siniestro</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <div class="columns">
+            <div class="column">
+              <mat-form-field appearance="fill">
+                <mat-label>N° Siniestro</mat-label>
+                <input matInput disabled value="{{ siniestro.numero }}" />
+              </mat-form-field>
+            </div>
+
+            <div class="column">
+              <mat-form-field appearance="fill">
+                <mat-label>Ejecutivo</mat-label>
+                <input
+                  matInput
+                  disabled
+                  value="{{ siniestro.ejecutivoNombres }}"
+                />
+              </mat-form-field>
+            </div>
+            <div class="column">
+              <mat-form-field appearance="fill">
+                <mat-label>Estado</mat-label>
+                <input matInput disabled value="{{ siniestro.estadoNombre }}" />
+              </mat-form-field>
+            </div>
+            <div class="column">
+              <mat-form-field appearance="fill">
+                <mat-label>Probabilidad</mat-label>
+                <input
+                  matInput
+                  disabled
+                  value="{{ siniestro.probabilidadDesc }}"
+                />
+              </mat-form-field>
+            </div>
+          </div>
+        </mat-card-content>
+      </mat-card>
+
+      <mat-card class="card-resumen-siniestro">
+        <mat-card-header>
+          <mat-card-title>Detalle</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <form [formGroup]="editarForm" (ngSubmit)="onSaveForm()">
+            <div class="columns is-multiline is-mobile">
+              <div class="column is-one-third">
+                <mat-form-field >
+                  <mat-label>Estado actual</mat-label>
+                  <input
+                    matInput
+                    disabled
+                    value="{{ siniestro.estadoNombre }}"
+                  />
+                </mat-form-field>
+              </div>
+              <div class="column is-one-third">
+                <mat-form-field >
+                  <mat-label>Estado siguiente</mat-label>
+                  <mat-select
+                    formControlName="estadoId"
+                    (selectionChange)="select($event.value)"
+                    [disabled]="siniestro.permisos.soloLectura || siniestro.pendienteVisado"
+                  >
+                    <mat-option></mat-option>
+                    <mat-optgroup
+                      *ngFor="let cadaItemsLista of siniestro.estadosTransicion"
+                      [label]="cadaItemsLista.nombre"
+                    >
+                      <mat-option
+                        *ngFor="let cadaItem of cadaItemsLista.items"
+                        [value]="cadaItem.id"
+                      >
+                        {{ cadaItem.nombre }}
+                      </mat-option>
+                    </mat-optgroup>
+                  </mat-select>
+                  <mat-hint *ngIf="siniestro.permisos.soloLectura" class="alerta__visado">En etapa fuera de alcance</mat-hint>
+                </mat-form-field>
+              </div>
+              <div class="column is-one-third">
+                <mat-form-field >
+                  <mat-label>Probabilidad</mat-label>
+                  <mat-select formControlName="probabilidad"  [disabled]="siniestro.pendienteVisado">
+                    <mat-option
+                      *ngFor="let probabilidad of probabilidades"
+                      [value]="probabilidad.valor"
+                    >
+                      {{ probabilidad.texto }}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+
+              <div
+                class="column is-one-third"
+                *ngIf="
+                  siniestro.permisos.companiaTercero.ver ||
+                  siniestro.permisos.companiaTercero.editar
+                "
+              >
+                <mat-form-field >
+                  <mat-label>Compañía tercero</mat-label>
+                  <mat-select formControlName="companiaTercero">
+                    <mat-option
+                      *ngFor="
+                        let probabilidad of siniestro.permisos.soloBciZenit
+                          ? companiasBciZenit
+                          : otrasCompanias
+                      "
+                      [value]="probabilidad.id"
+                    >
+                      {{ probabilidad.nombre }}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+
+              <div
+                class="column is-one-third"
+                *ngIf="
+                  siniestro.permisos.numeroTercero.ver ||
+                  siniestro.permisos.numeroTercero.editar
+                "
+              >
+                <mat-form-field >
+                  <mat-label>Número de siniestro tercero</mat-label>
+                  <input matInput formControlName="numeroTercero" maxlength="9" />
+                </mat-form-field>
+              </div>
+
+              <div
+                class="column is-one-third"
+                *ngIf="
+                  siniestro.permisos.fechaPromesa.ver ||
+                  siniestro.permisos.fechaPromesa.editar
+                "
+              >
+                <mat-form-field >
+                  <mat-label>Fecha promesa</mat-label>
+                  <input
+                    matInput
+                    [matDatepicker]="picker1"
+                    formControlName="fechaPromesa"
+                  />
+                  <mat-datepicker-toggle
+                    matSuffix
+                    [for]="picker1"
+                  ></mat-datepicker-toggle>
+                  <mat-datepicker #picker1 disabled="false"></mat-datepicker>
+                </mat-form-field>
+              </div>
+
+              <div
+                class="column is-one-third"
+                *ngIf="
+                  siniestro.permisos.monto.ver ||
+                  siniestro.permisos.monto.editar
+                "
+              >
+                <mat-form-field >
+                  <mat-label>Monto</mat-label>
+                  <span matPrefix>$ &nbsp;</span>
+                  <input matInput formControlName="monto"  maxlength="13" formatoPesos  />
+                </mat-form-field>
+              </div>
+
+              <div
+                class="column is-one-third"
+                *ngIf="
+                  siniestro.permisos.telefono.ver ||
+                  siniestro.permisos.telefono.editar
+                "
+              >
+                <mat-form-field >
+                  <mat-label>Teléfono</mat-label>
+                  <input matInput formControlName="telefono" />
+                </mat-form-field>
+              </div>
+
+              <div
+                class="column is-one-third"
+                *ngIf="
+                  siniestro.permisos.fechaCarta.ver ||
+                  siniestro.permisos.fechaCarta.editar
+                "
+              >
+                <mat-form-field >
+                  <mat-label>Fecha carta</mat-label>
+                  <input
+                    matInput
+                    [matDatepicker]="picker2"
+                    formControlName="fechaCarta"
+                  />
+                  <mat-datepicker-toggle
+                    matSuffix
+                    [for]="picker2"
+                  ></mat-datepicker-toggle>
+                  <mat-datepicker #picker2 disabled="false"></mat-datepicker>
+                </mat-form-field>
+              </div>
+
+              <div
+                class="column is-one-third"
+                *ngIf="
+                  siniestro.permisos.montoSolicitado.ver ||
+                  siniestro.permisos.montoSolicitado.editar
+                "
+              >
+                <mat-form-field>
+                  <mat-label>Monto Solicitado</mat-label>
+                  <span matPrefix>$&nbsp;</span>
+                  <input matInput  formControlName="montoSolicitado"  maxlength="13" formatoPesos />
+                </mat-form-field>
+              </div>
+              <div
+                class="column is-one-third"
+                *ngIf="
+                  siniestro.permisos.estudioAbogados.ver ||
+                  siniestro.permisos.estudioAbogados.editar
+                "
+              >
+                <mat-form-field >
+                  <mat-label>Estudio jurídico</mat-label>
+                  <mat-select formControlName="estudioAbogados">
+                    <mat-option value=""></mat-option>
+                    <mat-option
+                      *ngFor="let city of ejecutivos"
+                      [value]="city.id"
+                    >
+                      {{ city.nombre }}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="columns">
+              <div class="column has-text-right">
+                &nbsp;
+                <button
+                  mat-raised-button
+                  color="primary"
+                  [disabled]="siniestro.pendienteVisado"
+                  type="submit"
+                >
+                  Guardar
+                </button>
+                <div *ngIf="siniestro.pendienteVisado" class="alerta__visado">
+                  Certificación pendiente
+                </div>
+              </div>
+            </div>
+          </form>
+        </mat-card-content>
+      </mat-card>
+
+      <mat-card class="card-resumen-siniestro">
+        <mat-card-header>
+          <mat-card-title>Observaciones</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <app-bnd-observaciones [siniestroId]="siniestroId">
+          </app-bnd-observaciones>
+        </mat-card-content>
+      </mat-card>
+    </div>
+    <div class="column is-narrow">
+      <mat-card>
+        <mat-card-content>
+          <app-bnd-tabla-observaciones [siniestroId]="siniestroId">
+          </app-bnd-tabla-observaciones>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+</div>

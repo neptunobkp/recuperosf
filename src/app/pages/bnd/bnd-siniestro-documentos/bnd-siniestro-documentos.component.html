@@ -1,0 +1,159 @@
+<div class="container is-fluid container__principal" *ngIf="siniestro">
+  <mat-card class="card-resumen-siniestro">
+    <mat-card-header>
+      <mat-card-title>Siniestro</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <div class="columns">
+        <div class="column">
+          <mat-form-field appearance="fill">
+            <mat-label>N° Siniestro</mat-label>
+            <input matInput disabled value="{{ siniestro.numero }}" />
+          </mat-form-field>
+        </div>
+        <div class="column">
+          <mat-form-field appearance="fill">
+            <mat-label>Ejecutivo</mat-label>
+            <input matInput disabled value="{{ siniestro.ejecutivoNombres }}" />
+          </mat-form-field>
+        </div>
+        <div class="column">
+          <mat-form-field appearance="fill">
+            <mat-label>Estado</mat-label>
+            <input matInput disabled value="{{ siniestro.estadoNombre }}" />
+          </mat-form-field>
+        </div>
+        <div class="column">
+          <mat-form-field appearance="fill">
+            <mat-label>Probabilidad</mat-label>
+            <input matInput disabled value="{{ siniestro.probabilidad }}" />
+          </mat-form-field>
+        </div>
+      </div>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-accordion [multi]="true" *ngIf="estaSiniestroListo">
+    <mat-expansion-panel [expanded]="true">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          Documentos
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+
+      <div>
+        <div class="columns">
+          <div class="column titulo">Antecedentes</div>
+          <div class="column link">
+            <form
+              ngNoForm
+              target="_blank"
+              action="{{ siniestro.urlCm }}"
+              method="post"
+            >
+              <input
+                type="hidden"
+                name="data"
+                value="{{ siniestro.antecedentes }}"
+              />
+              <button type="submit" class="button is-primary is-small">
+                Abrir
+              </button>
+            </form>
+          </div>
+        </div>
+        <div class="columns">
+          <div class="column titulo">Fotos</div>
+          <div class="column link">
+            <form
+              ngNoForm
+              target="_blank"
+              action="{{ siniestro.urlCm }}"
+              method="post"
+            >
+              <input type="hidden" name="data" value="{{ siniestro.fotos }}" />
+              <button type="submit" class="button is-primary is-small">
+                Abrir
+              </button>
+            </form>
+          </div>
+        </div>
+        <div class="columns">
+          <div class="column titulo">Póliza</div>
+          <div class="column link">
+            <form
+              ngNoForm
+              target="_blank"
+              action="{{ siniestro.urlCm }}"
+              method="post"
+            >
+              <input type="hidden" name="data" value="{{ siniestro.poliza }}" />
+              <button type="submit" class="button is-primary is-small">
+                Abrir
+              </button>
+            </form>
+          </div>
+        </div>
+        <div class="columns">
+          <div class="column titulo">Facturas Físicas</div>
+          <div class="column link">
+            <form
+              ngNoForm
+              target="_blank"
+              action="{{ siniestro.urlCm }}"
+              method="post"
+            >
+              <input
+                type="hidden"
+                name="data"
+                value="{{ siniestro.facturas }}"
+              />
+              <button type="submit" class="button is-primary is-small">
+                Abrir
+              </button>
+            </form>
+          </div>
+        </div>
+        <div class="columns">
+          <div class="column titulo">Ordenes de reparación</div>
+          <div class="column link">
+            <a
+              class="button is-primary is-small"
+              href="{{ siniestro.ordenReparacion }}"
+              target="_blank"
+            >
+              Abrir
+            </a>
+          </div>
+        </div>
+      </div>
+    </mat-expansion-panel>
+
+    <mat-expansion-panel [expanded]="true">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          Facturas electrónicas
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+
+      <app-bnd-listar-facturas
+        [siniestroId]="siniestroId"
+      ></app-bnd-listar-facturas>
+    </mat-expansion-panel>
+
+    <mat-expansion-panel [expanded]="true">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          Adjuntos
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+      <app-bnd-tabla-adjuntos
+        [siniestro]="siniestro"
+      ></app-bnd-tabla-adjuntos>
+    </mat-expansion-panel>
+  </mat-accordion>
+</div>
+
+<div class="contenedor">
+  <div></div>
+</div>

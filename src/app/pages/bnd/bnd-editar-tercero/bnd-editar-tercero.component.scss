@@ -1,0 +1,21 @@
+mat-form-field {
+    width: 100%;
+    max-width: 225px;
+  }
+  
+  .mat-card {
+    padding-top: 4px;
+    padding-bottom: 4px;
+  }
+  
+  .columns {
+    margin-bottom: 0;
+  
+    .column {
+      padding:0px 8px;
+    }
+  }
+  
+  .mat-dialog-content {
+    overflow: inherit;
+  }
